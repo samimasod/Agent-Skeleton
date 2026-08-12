@@ -19,10 +19,7 @@ export default function StatusPage() {
       <Navbar />
 
       <section className="pt-36 pb-16 px-6 max-w-5xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-xs font-semibold uppercase tracking-wider mb-6">
-          <Activity className="h-4 w-4" /> All Systems Operational
-        </div>
-        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
+        <h1 className="text-4xl sm:text-5xl font-normal tracking-tight text-white">
           System Operational Status
         </h1>
         <p className="mt-3 text-xs sm:text-sm text-gray-400">

@@ -25,10 +25,7 @@ export default function ContactPage() {
       <Navbar />
 
       <section className="pt-36 pb-16 px-6 max-w-4xl mx-auto text-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#006ddd]/15 text-[#7fc8ff] border border-[#006ddd]/30 text-xs font-semibold uppercase tracking-wider mb-6">
-          <Mail className="h-3.5 w-3.5" /> Contact Sales & Inquiries
-        </div>
-        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
+        <h1 className="text-4xl sm:text-5xl font-normal tracking-tight text-white">
           Get in Touch with Our Team
         </h1>
         <p className="mt-3 text-xs sm:text-sm text-gray-400">

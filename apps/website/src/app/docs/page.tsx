@@ -48,7 +48,7 @@ export default function DocsPage() {
           {/* Right Main Content */}
           <div className="lg:col-span-9 bg-[#0d1527]/50 border border-white/10 rounded-3xl p-8 space-y-8">
             <div>
-              <h1 className="text-3xl font-extrabold text-white">Developer Documentation & API Guides</h1>
+              <h1 className="text-3xl font-normal text-white">Developer Documentation & API Guides</h1>
               <p className="text-xs text-gray-400 mt-2 leading-relaxed">
                 Everything you need to clone, customize, and deploy multi-tenant AI SaaS platforms.
               </p>
