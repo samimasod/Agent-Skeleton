@@ -93,7 +93,7 @@ export default function ProductDetailPage() {
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-normal text-white mt-4">{product.name}</h1>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-white mt-4">{product.name}</h1>
             <p className="text-xs text-gray-400 mt-3 leading-relaxed">{product.description}</p>
 
             <div className="my-6 p-4 rounded-2xl bg-[#162238]/60 border border-white/5 flex items-center justify-between">

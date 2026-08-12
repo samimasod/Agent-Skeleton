@@ -113,7 +113,10 @@ export default function CatalogPage() {
 
       {/* Hero Header */}
       <section className="relative pt-36 pb-16 px-6 max-w-7xl mx-auto text-center">
-        <h1 className="text-4xl sm:text-6xl font-normal tracking-tight text-white max-w-3xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#006ddd]/15 text-[#7fc8ff] border border-[#006ddd]/30 text-xs font-semibold uppercase tracking-wider mb-6">
+          <Sparkles className="h-3.5 w-3.5" /> Public Product Catalog & Showcase
+        </div>
+        <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-white max-w-3xl mx-auto">
           Explore Production-Ready <span className="bg-gradient-to-r from-[#7fc8ff] to-[#006ddd] bg-clip-text text-transparent">AI & SaaS Modules</span>
         </h1>
         <p className="mt-4 text-base sm:text-lg text-gray-400 max-w-2xl mx-auto">

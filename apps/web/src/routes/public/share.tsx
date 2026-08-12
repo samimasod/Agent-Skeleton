@@ -63,7 +63,7 @@ export function PublicSharePage() {
       {/* Main Catalog View */}
       <main className="flex-1 max-w-6xl w-full mx-auto p-6 space-y-8">
         <div className="text-center max-w-2xl mx-auto space-y-2">
-          <h2 className="text-3xl font-normal tracking-tight">Public Products & Services</h2>
+          <h2 className="text-3xl font-extrabold tracking-tight">Public Products & Services</h2>
           <p className="text-xs text-muted-foreground">
             Browse published modules and tools offered by this organization.
           </p>

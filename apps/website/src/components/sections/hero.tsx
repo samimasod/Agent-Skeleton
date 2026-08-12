@@ -24,8 +24,15 @@ export function HeroSection() {
       />
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+        {/* Badge */}
+        <AnimatedGradientText className="mb-6 cursor-pointer">
+          <Sparkles className="h-3.5 w-3.5 text-[#7fc8ff]" />
+          <span>Multi-Tenant SaaS & AI Platform Skeleton</span>
+          <ArrowRight className="h-3.5 w-3.5 text-[#7fc8ff]" />
+        </AnimatedGradientText>
+
         {/* Title */}
-        <h1 className="mx-auto max-w-4xl font-display text-4xl font-normal tracking-tight text-white sm:text-6xl md:text-7xl leading-[1.1]">
+        <h1 className="mx-auto max-w-4xl font-display text-4xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl leading-[1.1]">
           Build Multi-Tenant SaaS & AI Products <br className="hidden sm:inline" />
           <span className="bg-gradient-to-r from-[#7fc8ff] via-[#beb4fd] to-[#006ddd] bg-clip-text text-transparent">
             In Hours, Not Months
