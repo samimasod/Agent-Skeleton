@@ -64,9 +64,7 @@ export function AdminSidebar({
       {/* Brand Header */}
       <div className="flex h-14 items-center justify-between px-4 border-b border-border/50">
         <div className="flex items-center gap-2.5 overflow-hidden">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground font-extrabold text-sm">
-            S
-          </div>
+          <img src="/logo.svg" alt="Logo" className="h-8 w-8 rounded-lg shrink-0 shadow-md" />
           {!isCollapsed && (
             <span className="font-extrabold text-sm tracking-tight text-foreground truncate">
               Skeleton Admin

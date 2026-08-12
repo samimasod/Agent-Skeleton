@@ -39,9 +39,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar collapsible="icon" variant="inset" {...props}>
       <SidebarHeader className="border-b border-sidebar-border p-0">
         <div className="flex items-center gap-3 px-4 py-4">
-          <div className="flex h-10 w-10 items-center justify-center bg-primary text-sm font-bold text-primary-foreground">
-            S
-          </div>
+          <img src="/logo.svg" alt="Logo" className="h-9 w-9 rounded-xl shadow-md shrink-0" />
           <div className="min-w-0 group-data-[collapsible=icon]:hidden">
             <div className="truncate font-medium text-sidebar-foreground">Skeleton</div>
             <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-sidebar-foreground/60">

@@ -26,9 +26,11 @@ export function Navbar() {
         <div className="flex w-full h-full items-center justify-between px-6 sm:px-8">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-tr from-[#006ddd] to-[#7fc8ff] shadow-lg shadow-[#006ddd]/30 group-hover:scale-105 transition-transform">
-              <span className="font-mono text-lg font-bold text-white">S</span>
-            </div>
+            <img
+              src="/logo.svg"
+              alt="Agent-Skeleton Logo"
+              className="h-9 w-9 rounded-xl shadow-lg shadow-[#006ddd]/40 group-hover:scale-105 transition-transform"
+            />
             <div className="flex flex-col">
               <span className="font-sans text-xl font-extrabold tracking-tight text-white group-hover:text-[#7fc8ff] transition-colors flex items-center gap-2">
                 Skeleton
