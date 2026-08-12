@@ -15,6 +15,6 @@ This document outlines the current status and planned roadmap for the Multi-Tena
 | **AI Subsystem** | Sandboxed Python tool execution & fallback UI | ✅ Implemented & Tested |
 | **SuperAdmin** | Telemetry, cloud monitor pool, & quota management | ✅ Implemented & Tested |
 | **Billing** | Stripe subscription & usage-based metering | 📅 Planned |
-| **Auth** | Passwordless magic link & SSO | 📅 Planned |
-| **Infra** | Terraform AWS & GCP IaC templates | 📅 Planned |
+| **Infra** | **Microsoft Azure Deployment Support** (Container Apps, Azure Database for PostgreSQL, Azure Blob Storage) | 📅 Planned (Next Priority) |
+| **Infra** | Terraform AWS, GCP, & Azure IaC templates | 📅 Planned |
 | **Mobile** | React Native Expo full feature parity | 🟡 Partial |

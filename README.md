@@ -116,9 +116,9 @@ pip install -r requirements.txt
 | **Human-in-the-Loop Approval** | ✅ Implemented & Tested | Tool gate requiring explicit approval (`require_approval=True`) |
 | **SuperAdmin Monitoring API** | ✅ Implemented & Tested | Decoupled microservice for cloud pool health & token telemetry |
 | **TypeScript Type Generation** | ✅ Implemented & Tested | `pnpm typegen` converting Pydantic V2 schemas to TypeScript interfaces |
-| **Mobile Client App** | 🟡 Partial | Expo / React Native shell with agent chat view |
+| **Azure Cloud Support** | 📅 Planned (Next) | Deployment guide & provider adapters for Microsoft Azure (Container Apps, Azure Database for PostgreSQL, Azure Blob Storage) |
 | **Stripe Billing Metering** | 📅 Planned | Usage-based billing integration |
-| **IaC Terraform Templates** | 📅 Planned | Automated Terraform scripts for AWS & GCP |
+| **IaC Terraform Templates** | 📅 Planned | Automated Terraform scripts for AWS, GCP, & Azure |
 
 ---
 
