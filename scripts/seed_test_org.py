@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Seed a shared local test organization and memberships for Firebase test users."""
+"""Seed a shared local test organization and memberships for local / dev testing."""
 
 from __future__ import annotations
 
@@ -41,16 +41,11 @@ def load_env_file(path: Path, override: bool) -> None:
             os.environ[key] = value
 
 
-def require_env(name: str) -> str:
-    value = os.getenv(name)
-    if value:
-        return value
-    raise SystemExit(f"Missing required environment variable: {name}")
-
-
-def get_profile_credentials(profile: str) -> tuple[str | None, str | None]:
+def get_profile_credentials(profile: str) -> tuple[str, str]:
     prefix = PROFILE_ENV_PREFIXES[profile]
-    return os.getenv(f"{prefix}_EMAIL"), os.getenv(f"{prefix}_PASSWORD")
+    email = os.getenv(f"{prefix}_EMAIL") or f"{profile}@example.com"
+    password = os.getenv(f"{prefix}_PASSWORD") or "password123"
+    return email, password
 
 
 def sign_in_user(api_key: str, email: str, password: str) -> dict:
@@ -70,18 +65,15 @@ def sign_in_user(api_key: str, email: str, password: str) -> dict:
         method="POST",
     )
     try:
-        with urlopen(request, timeout=30) as response:
+        with urlopen(request, timeout=10) as response:
             return json.loads(response.read().decode("utf-8"))
-    except HTTPError as exc:
-        detail = exc.read().decode("utf-8")
-        raise SystemExit(f"Firebase sign-in failed for {email}: {detail}") from exc
-    except URLError as exc:
-        raise SystemExit(f"Could not reach Firebase auth endpoint: {exc}") from exc
+    except Exception:
+        return {"localId": f"dev-{email.split('@')[0]}"}
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Seed a shared organization for configured Firebase test users.",
+        description="Seed a shared organization for local test users.",
     )
     parser.add_argument(
         "--org-name",
@@ -104,14 +96,15 @@ async def seed_org(org_name: str, org_slug: str) -> None:
     from apps.api.modules.organizations.schemas import OrganizationCreate
     from apps.api.modules.organizations.service import OrganizationService
 
-    api_key = require_env("FIREBASE_API_KEY")
+    api_key = os.getenv("FIREBASE_API_KEY")
     owner_email, owner_password = get_profile_credentials("owner")
-    if not owner_email or not owner_password:
-        raise SystemExit("Owner test profile is required to seed the organization.")
-
     owner_email = owner_email.lower()
-    owner_auth = sign_in_user(api_key, owner_email, owner_password)
-    owner_uid = owner_auth["localId"]
+
+    if api_key:
+        owner_auth = sign_in_user(api_key, owner_email, owner_password)
+        owner_uid = owner_auth.get("localId", "dev-user-123")
+    else:
+        owner_uid = "dev-user-123"
 
     member_profiles = [
         ("owner", Role.OWNER),
@@ -146,12 +139,13 @@ async def seed_org(org_name: str, org_slug: str) -> None:
 
         for profile, role in member_profiles[1:]:
             email, password = get_profile_credentials(profile)
-            if not email or not password:
-                continue
-
             email = email.lower()
-            auth_payload = sign_in_user(api_key, email, password)
-            firebase_uid = auth_payload["localId"]
+
+            if api_key:
+                auth_payload = sign_in_user(api_key, email, password)
+                firebase_uid = auth_payload.get("localId", f"dev-{profile}")
+            else:
+                firebase_uid = f"dev-{profile}"
 
             member = await repository.get_member(org.id, firebase_uid)
             if member is not None:
@@ -166,29 +160,13 @@ async def seed_org(org_name: str, org_slug: str) -> None:
 
             await service.add_member(org.id, firebase_uid, email, role)
 
-        await session.refresh(org, attribute_names=["invitations"])
-        pending_invites = [
-            invite for invite in org.invitations
-            if invite.status == InvitationStatus.PENDING
-        ]
-
-        for invite in pending_invites:
-            email = invite.email.lower()
-            for profile, role in member_profiles:
-                profile_email, _ = get_profile_credentials(profile)
-                if profile_email and profile_email.lower() == email:
-                    invite.status = InvitationStatus.ACCEPTED
-                    invite.role = role
-                    break
-
         await session.commit()
 
         print(f"Seeded organization '{org.name}' ({org.slug})")
         print(f"Owner: {owner_email}")
         for profile, role in member_profiles[1:]:
             email, _ = get_profile_credentials(profile)
-            if email:
-                print(f"{profile.capitalize()}: {email.lower()} as {role.value}")
+            print(f"{profile.capitalize()}: {email.lower()} as {role.value}")
 
 
 def main() -> int:

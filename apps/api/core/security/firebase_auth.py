@@ -86,9 +86,13 @@ class FirebaseAuthService:
                     print(f"Warning: Could not initialize Firebase with defaults: {e}")
     
     def verify_token(self, token: str) -> Optional[FirebaseUser]:
-        """Verify a Firebase ID token and return the user."""
+        """Verify a JWT or Firebase ID token and return the user."""
+        from apps.api.core.security.jwt_auth import verify_local_token
+        local_user = verify_local_token(token)
+        if local_user:
+            return local_user
+
         if not self.initialized or not FIREBASE_AVAILABLE:
-            # Mock user for development without Firebase
             return FirebaseUser(
                 uid="dev-user-123",
                 email="dev@example.com",

@@ -36,3 +36,23 @@ class UserProfileResponse(BaseModel):
     picture: Optional[str] = None
     is_super_admin: bool = False
     organizations: list = []
+
+
+class LoginRequest(BaseModel):
+    """Request schema for local user login."""
+    email: EmailStr
+    password: str
+
+
+class RegisterRequest(BaseModel):
+    """Request schema for local user registration."""
+    email: EmailStr
+    password: str
+    name: Optional[str] = None
+
+
+class TokenResponse(BaseModel):
+    """Response schema for JWT authentication token."""
+    access_token: str
+    token_type: str = "bearer"
+    user: UserResponse

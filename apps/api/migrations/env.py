@@ -8,6 +8,7 @@ from alembic import context
 
 # Import Base and all remaining models
 from apps.api.core.database.base import Base
+from apps.api.modules.auth.models import User
 from apps.api.modules.organizations.models import Organization, OrganizationMember, OrganizationInvitation
 from apps.api.modules.projects.models import Project
 from apps.api.modules.llm.models import LLMModel

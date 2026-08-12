@@ -269,6 +269,11 @@ export type LLMModelResponse = {
   context_tokens: number;
 };
 
+export type LoginRequest = {
+  email: string;
+  password: string;
+};
+
 export type OrganizationCreate = {
   name: string;
   description?: string | null;
@@ -404,7 +409,19 @@ export type QuotaUpdateInput = {
   alert_threshold_percentage?: number | null;
 };
 
+export type RegisterRequest = {
+  email: string;
+  password: string;
+  name?: string | null;
+};
+
 export type Role = 'owner' | 'admin' | 'member' | 'viewer';
+
+export type TokenResponse = {
+  access_token: string;
+  token_type?: string;
+  user: UserResponse;
+};
 
 export type UpdateMemberRoleRequest = {
   role: Role;
