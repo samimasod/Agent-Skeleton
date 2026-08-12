@@ -81,3 +81,6 @@ config/admin.yaml
 config/settings.yaml
 !config/*.example.*
 
+# Generated Artifacts & Recordings
+artifacts/
+
