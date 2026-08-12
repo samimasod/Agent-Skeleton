@@ -17,6 +17,8 @@ import { ProjectDetailPage } from "@/routes/dashboard/projects/[id]"
 import { SettingsPage } from "@/routes/dashboard/settings"
 import { AgentsPage } from "@/routes/dashboard/agents"
 import { AgentBuilderPage } from "@/routes/dashboard/agent-builder"
+import { PublicDemoPage } from "@/routes/public/demo"
+import { PublicSharePage } from "@/routes/public/share"
 import type { OrganizationInvitation } from "@/lib/api-client"
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -134,6 +136,11 @@ function App() {
             </PublicRoute>
           }
         />
+
+        {/* Public Unauthenticated Demo & Share Routes */}
+        <Route path="/demo" element={<PublicDemoPage />} />
+        <Route path="/p/:slug" element={<PublicSharePage />} />
+        <Route path="/store" element={<PublicSharePage />} />
 
         <Route
           path="/dashboard"

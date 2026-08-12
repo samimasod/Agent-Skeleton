@@ -40,21 +40,24 @@ export function Navbar() {
           </Link>
 
           {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-            <a href="#features" className="hover:text-[#7fc8ff] transition-colors">
-              Features
-            </a>
-            <a href="#architecture" className="hover:text-[#7fc8ff] transition-colors">
-              Architecture
-            </a>
-            <a href="#how-it-works" className="hover:text-[#7fc8ff] transition-colors">
-              Workflow
-            </a>
-            <a href="#ai-agents" className="hover:text-[#7fc8ff] transition-colors">
-              AI Agents
-            </a>
+          <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300">
+            <Link href="/catalog" className="hover:text-[#7fc8ff] transition-colors">
+              Catalog
+            </Link>
+            <Link href="/blog" className="hover:text-[#7fc8ff] transition-colors">
+              Blog
+            </Link>
+            <Link href="/docs" className="hover:text-[#7fc8ff] transition-colors">
+              Docs
+            </Link>
+            <Link href="/status" className="hover:text-[#7fc8ff] transition-colors">
+              Status
+            </Link>
+            <Link href="/contact" className="hover:text-[#7fc8ff] transition-colors">
+              Contact
+            </Link>
             <a href={adminUrl} target="_blank" rel="noreferrer" className="text-[#beb4fd] hover:text-white transition-colors flex items-center gap-1">
-              <ShieldCheck className="h-3.5 w-3.5 text-[#beb4fd]" /> SuperAdmin (3002)
+              <ShieldCheck className="h-3.5 w-3.5 text-[#beb4fd]" /> Admin
             </a>
           </nav>
 
