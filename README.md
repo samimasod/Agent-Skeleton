@@ -8,6 +8,7 @@ Clone the repository, describe your product to a coding agent, and extend an arc
 
 ---
 
+[![Author: samimasod](https://img.shields.io/badge/Author-samimasod-blue.svg)](https://github.com/samimasod)
 [![CI](https://img.shields.io/badge/CI-Passing-brightgreen.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
@@ -224,6 +225,7 @@ We provide Docker containerization and step-by-step cloud deployment guides:
 
 ---
 
-## 📄 License
+## 📄 License & Author
 
-Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
+- **Author & Maintainer**: **Sami Masod** ([@samimasod](https://github.com/samimasod))
+- **License**: Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.

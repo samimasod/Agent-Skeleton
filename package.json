@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Generic multi-tenant application skeleton",
+  "author": "Sami Masod (@samimasod)",
   "scripts": {
     "dev": "pnpm --parallel -r run dev",
     "dev:web": "pnpm --filter @skeleton/web dev",

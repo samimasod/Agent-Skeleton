@@ -2,7 +2,7 @@
 name = "multi-tenant-skeleton"
 version = "0.1.0"
 description = "Generic multi-tenant application skeleton"
-authors = ["Skeleton Team"]
+authors = ["Sami Masod (@samimasod)"]
 readme = "README.md"
 packages = [
     { include = "apps/api" },
