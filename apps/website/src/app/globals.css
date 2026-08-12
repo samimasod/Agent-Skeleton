@@ -1,0 +1,137 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --lc-dark-900: #030710;
+    --lc-dark-800: #0d1322;
+    --lc-dark-700: #161f34;
+    --lc-dark-600: #2f4b68;
+    --lc-dark-500: #40668d;
+    --lc-dark-400: #006ddd;
+    --lc-blue-900: #7fc8ff;
+    --lc-blue-800: #99d3ff;
+    --lc-blue-600: #b2deff;
+    --lc-blue-500: #cce9ff;
+    --lc-blue-400: #e5f4ff;
+    --lc-blue-300: #f2faff;
+    --lc-violet-400: #beb4fd;
+    --lc-violet-300: #cfc8fe;
+    --lc-violet-100: #f8f7ff;
+    --lc-green-500: #132d2d;
+    --lc-green-400: #1d3d3c;
+    --lc-green-300: #8b9c9c;
+    --lc-stroke: #dae1e6;
+  }
+
+  * {
+    @apply border-white/10;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #030710;
+  }
+
+  body {
+    background-color: #030710 !important;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 400;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Universal Inter Typography */
+  h1, h2, h3, h4, h5, h6, .font-display, .font-sans {
+    font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    letter-spacing: -0.025em;
+  }
+
+  /* Glassmorphism cards */
+  .glass-card {
+    background: rgba(22, 31, 52, 0.7);
+    border: 1px solid rgba(127, 200, 255, 0.12);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  /* Text gradients */
+  .text-gradient {
+    background: linear-gradient(135deg, #ffffff 0%, #7fc8ff 50%, #beb4fd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Selection color */
+  ::selection {
+    background: rgba(127, 200, 255, 0.25);
+    color: #fff;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #030710;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2f4b68;
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  /* Premium Primary Button */
+  .btn-primary-sleek {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-white transition-all duration-300;
+    font-family: var(--font-inter), "Inter", sans-serif;
+    background: linear-gradient(135deg, #006ddd 0%, #0052ad 100%);
+    border: 1px solid rgba(127, 200, 255, 0.35);
+    box-shadow: 0 0 20px rgba(0, 109, 221, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .btn-primary-sleek:hover {
+    background: linear-gradient(135deg, #0077f2 0%, #0061cc 100%);
+    border-color: rgba(127, 200, 255, 0.6);
+    box-shadow: 0 0 30px rgba(127, 200, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary-sleek:active {
+    transform: translateY(0);
+    box-shadow: 0 0 15px rgba(0, 109, 221, 0.4);
+  }
+
+  /* Secondary Button */
+  .btn-secondary-sleek {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-base font-semibold text-gray-200 transition-all duration-300;
+    font-family: var(--font-inter), "Inter", sans-serif;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+  }
+
+  .btn-secondary-sleek:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(127, 200, 255, 0.4);
+    color: #ffffff;
+    transform: translateY(-1px);
+  }
+
+  .eyebrow {
+    font-family: var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #7fc8ff;
+  }
+}

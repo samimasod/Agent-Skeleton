@@ -1,0 +1,31 @@
+# Database Configuration Example
+# Copy this file to database.yaml and update values
+
+environments:
+  local:
+    driver: sqlite
+    database: ./data/skeleton_local.db
+    journal_mode: WAL
+    foreign_keys: true
+    
+  staging:
+    driver: postgresql
+    host: your-cloud-sql-host
+    port: 5432
+    database: skeleton_staging
+    username: your-username
+    password: your-password
+    ssl_mode: require
+    pool_size: 5
+    
+  production:
+    driver: postgresql
+    host: your-cloud-sql-host
+    port: 5432
+    database: skeleton_production
+    username: your-username
+    password: your-password
+    ssl_mode: require
+    pool_size: 20
+    
+default: local

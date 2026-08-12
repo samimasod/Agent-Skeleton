@@ -1,0 +1,149 @@
+services:
+  - type: web
+    branch: staging
+    autoDeployTrigger: checksPass
+    name: skeleton-api-staging
+    runtime: python
+    plan: starter
+    rootDir: .
+    region: singapore
+    buildCommand: pip install uv && uv pip install --system -r requirements.txt
+    startCommand: python -m uvicorn apps.api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: DATABASE_ENV
+        value: staging
+      - key: API_DEBUG
+        value: "false"
+      - key: API_LOG_LEVEL
+        value: INFO
+      - key: CACHE_ENABLED
+        value: "true"
+      - key: CACHE_BACKEND
+        value: redis
+      - key: CACHE_DEFAULT_TTL_SECONDS
+        value: "300"
+      - key: STORAGE_PROVIDER
+        value: local
+      - key: STORAGE_LOCAL_PATH
+        value: ./data/storage
+      - key: CORS_ORIGINS
+        value: '["https://skeleton-web-staging.onrender.com"]'
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIREBASE_API_KEY
+        sync: false
+      - key: FIREBASE_ADMIN_CREDENTIALS_JSON
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+
+  - type: web
+    branch: staging
+    autoDeployTrigger: checksPass
+    name: skeleton-web-staging
+    runtime: static
+    rootDir: .
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @skeleton/web build
+    staticPublishPath: apps/web/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://skeleton-api-staging.onrender.com
+      - key: VITE_FIREBASE_API_KEY
+        sync: false
+      - key: VITE_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: VITE_FIREBASE_PROJECT_ID
+        sync: false
+      - key: VITE_FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: VITE_FIREBASE_MESSAGING_SENDER_ID
+        sync: false
+      - key: VITE_FIREBASE_APP_ID
+        sync: false
+
+  - type: web
+    branch: main
+    autoDeployTrigger: checksPass
+    name: skeleton-api
+    runtime: python
+    plan: starter
+    rootDir: .
+    region: singapore
+    buildCommand: pip install uv && uv pip install --system -r requirements.txt
+    startCommand: python -m uvicorn apps.api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: DATABASE_ENV
+        value: production
+      - key: API_DEBUG
+        value: "false"
+      - key: API_LOG_LEVEL
+        value: INFO
+      - key: CACHE_ENABLED
+        value: "true"
+      - key: CACHE_BACKEND
+        value: redis
+      - key: CACHE_DEFAULT_TTL_SECONDS
+        value: "300"
+      - key: STORAGE_PROVIDER
+        value: local
+      - key: STORAGE_LOCAL_PATH
+        value: ./data/storage
+      - key: CORS_ORIGINS
+        value: '["https://skeleton-web.onrender.com"]'
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIREBASE_API_KEY
+        sync: false
+      - key: FIREBASE_ADMIN_CREDENTIALS_JSON
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+
+  - type: web
+    branch: main
+    autoDeployTrigger: checksPass
+    name: skeleton-web
+    runtime: static
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @skeleton/web build
+    staticPublishPath: apps/web/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://skeleton-api.onrender.com
+      - key: VITE_FIREBASE_API_KEY
+        sync: false
+      - key: VITE_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: VITE_FIREBASE_PROJECT_ID
+        sync: false
+      - key: VITE_FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: VITE_FIREBASE_MESSAGING_SENDER_ID
+        sync: false
+      - key: VITE_FIREBASE_APP_ID
+        sync: false

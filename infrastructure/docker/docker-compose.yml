@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  # FastAPI Backend
+  api:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_ENV=local
+      - API_DEBUG=true
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ../../apps/api:/app/apps/api
+      - ../../config:/app/config
+      - ../../data:/app/data
+    depends_on:
+      - redis
+    command: uvicorn apps.api.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Vite React Frontend
+  web:
+    build:
+      context: ../..
+      dockerfile: infrastructure/docker/Dockerfile.web
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    volumes:
+      - ../../apps/web:/app/apps/web
+      - /app/apps/web/node_modules
+    command: pnpm --filter @helm/web dev --host
+
+  # Redis for caching and queues
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # PostgreSQL (optional - for testing with real DB locally)
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=helm
+      - POSTGRES_PASSWORD=helmpassword
+      - POSTGRES_DB=helm_local
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    profiles:
+      - postgres
+
+volumes:
+  redis_data:
+  postgres_data:

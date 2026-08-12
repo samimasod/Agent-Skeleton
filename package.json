@@ -1,0 +1,43 @@
+{
+  "name": "multi-tenant-skeleton",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generic multi-tenant application skeleton",
+  "scripts": {
+    "dev": "pnpm --parallel -r run dev",
+    "dev:web": "pnpm --filter @skeleton/web dev",
+    "dev:website": "pnpm --filter @skeleton/website dev",
+    "dev:admin": "pnpm --filter @skeleton/admin dev",
+    "dev:api": ".venv/bin/python -m uvicorn apps.api.main:app --reload",
+    "dev:admin-api": ".venv/bin/python -m uvicorn apps.api_admin.main:app --port 8001 --reload",
+    "auth:provision": ".venv/bin/python scripts/provision_test_users.py",
+    "auth:seed-org": ".venv/bin/python -m scripts.seed_test_org",
+    "auth:token": ".venv/bin/python scripts/get_test_token.py",
+    "typegen": ".venv/bin/python scripts/generate_openapi_types.py",
+    "typecheck": "pnpm -r run typecheck",
+    "build": "pnpm -r run build",
+    "build:web": "pnpm --filter @skeleton/web build",
+    "build:website": "pnpm --filter @skeleton/website build",
+    "build:admin": "pnpm --filter @skeleton/admin build",
+    "lint": "pnpm -r run lint",
+    "test": ".venv/bin/python -m pytest tests/unit/",
+    "test:api": ".venv/bin/python -m pytest tests/unit/",
+    "check:commit": "pnpm typegen && pnpm typecheck && pnpm --filter @skeleton/web lint",
+    "check:push": "pnpm check:commit && pnpm build && pnpm test:api",
+    "hooks:install": "git config core.hooksPath .husky",
+    "clean": "pnpm -r run clean"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "pnpm": {
+    "overrides": {
+      "react": "19.1.0",
+      "react-dom": "19.1.0",
+      "@types/react": "^19.1.0",
+      "@types/react-dom": "^19.1.0"
+    }
+  }
+}

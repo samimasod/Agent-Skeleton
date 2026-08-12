@@ -1,0 +1,9 @@
+# SuperAdmin Platform & Microservice Configuration Example
+
+admin:
+  # Set to true to enforce SuperAdmin authentication on API microservice (Port 8001) & UI (Port 3002)
+  # Set to false to disable authentication requirement during local development
+  admin_auth_enabled: true
+
+  # Secret API Key for SuperAdmin microservice authentication
+  super_admin_api_key: "sk_admin_secret_key_12345"

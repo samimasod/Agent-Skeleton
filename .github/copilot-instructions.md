@@ -1,0 +1,13 @@
+# GitHub Copilot Instructions — Multi-Tenant Application Skeleton
+
+This repository follows strict guidelines defined in AGENTS.md and GEMINI.md.
+
+Always review and follow:
+- Multi-tenant tenant isolation (`organization_id` FK with `ondelete="CASCADE"`)
+- Alembic database migration rules (never alter schema directly without migration)
+- 8-step backend CRUD architecture under `apps/api/modules/<module_name>/`
+- Centralized pagination framework (`PaginationParams` in FastAPI, `usePagination` in Web, `usePaginatedList` in Mobile)
+- Type safety: run `pnpm typegen` after modifying schemas and verify `pnpm typecheck` returns 0 errors
+- Reactive state management with TanStack Query (`queryClient.invalidateQueries`)
+
+For complete details, view [AGENTS.md](file:///Users/sami/Desktop/Skeleton/AGENTS.md) and [docs/developer_guide.md](file:///Users/sami/Desktop/Skeleton/docs/developer_guide.md).

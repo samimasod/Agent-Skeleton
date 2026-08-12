@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-family: var(--ff-body);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(180deg, #030710 0%, #080d1a 100%),
+      radial-gradient(circle at 18% 0%, rgba(0, 109, 221, 0.15), transparent 35%),
+      radial-gradient(circle at 86% 12%, rgba(127, 200, 255, 0.10), transparent 30%);
+    font-family: var(--ff-body);
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+}

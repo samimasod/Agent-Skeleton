@@ -1,0 +1,179 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-family: var(--ff-body);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(180deg, rgba(18, 16, 12, 0.98), rgba(11, 10, 8, 1)),
+      linear-gradient(90deg, rgba(248, 239, 216, 0.035), transparent 18%, transparent 82%, rgba(230, 200, 117, 0.035)),
+      radial-gradient(circle at 18% 0%, rgba(214, 168, 79, 0.12), transparent 30%),
+      radial-gradient(circle at 86% 12%, rgba(230, 200, 117, 0.08), transparent 28%);
+    font-family: var(--ff-body);
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .light body {
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(circle at 18% 0%, rgba(201, 155, 57, 0.14), transparent 32%),
+      radial-gradient(circle at 82% 18%, rgba(223, 201, 155, 0.14), transparent 28%),
+      linear-gradient(180deg, rgba(255, 251, 241, 0.96), rgba(251, 247, 236, 1));
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--ff-display);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+  }
+
+  code,
+  pre,
+  kbd,
+  samp,
+  .font-mono {
+    font-family: var(--ff-mono);
+  }
+
+  a {
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  input,
+  textarea,
+  select {
+    background: rgba(26, 26, 27, 0.96);
+    border: 1px solid rgba(243, 234, 223, 0.12);
+    color: var(--text);
+  }
+
+  .light input,
+  .light textarea,
+  .light select {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--fog);
+    color: var(--text);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-muted);
+  }
+
+  textarea,
+  select,
+  input,
+  button {
+    font-family: var(--ff-body);
+  }
+
+  textarea,
+  select,
+  input {
+    @apply rounded-sm px-3 py-2 text-sm focus:outline-none;
+  }
+
+  textarea:focus,
+  select:focus,
+  input:focus {
+    border-color: var(--ember-dim);
+    box-shadow: 0 0 0 1px var(--ember-dim);
+  }
+
+  ::selection {
+    background: var(--ember-glow);
+    color: var(--text);
+  }
+
+  .light ::selection {
+    background: rgba(200, 113, 42, 0.16);
+    color: var(--text);
+  }
+}
+
+@layer components {
+  .brand-shell {
+    position: relative;
+  }
+
+  .brand-shell::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(248, 239, 216, 0.03), transparent 14%, transparent 86%, rgba(230, 200, 117, 0.03)),
+      radial-gradient(circle at 50% 18%, rgba(214, 168, 79, 0.08), transparent 24%);
+    z-index: 0;
+  }
+
+  .light .brand-shell::before {
+    background:
+      radial-gradient(circle at 50% 15%, rgba(201, 155, 57, 0.1), transparent 24%),
+      radial-gradient(circle at 50% 85%, rgba(223, 201, 155, 0.12), transparent 30%);
+  }
+
+  .brand-panel {
+    border: 1px solid var(--brand-border);
+    background: rgba(18, 16, 12, 0.94);
+    box-shadow: var(--glow-card);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  .light .brand-panel {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--fog);
+    box-shadow: var(--glow-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .brand-eyebrow {
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ember);
+  }
+
+  .brand-copy {
+    color: var(--text-dim);
+  }
+
+  .brand-link {
+    color: var(--text);
+    border-bottom: 1px solid transparent;
+  }
+
+  .brand-link:hover {
+    color: var(--ember-light);
+    border-color: var(--ember);
+  }
+}
