@@ -38,22 +38,30 @@ The application seamlessly connects across **Google Cloud Platform (GCP)**, **Am
 
 ---
 
-## 🛠️ 3. Backend CRUD Architecture (8-Step Module Pattern)
+## 🛠️ 3. Backend CRUD Architecture (9-Step Module Pattern)
 
-When creating or extending domain modules under `apps/api/modules/<module_name>/`, follow this standard 8-step structure:
+When creating or extending domain modules under `apps/api/modules/<module_name>/`, follow this standard 9-step structure:
 
 ```text
 apps/api/modules/<module_name>/
 ├── __init__.py
 ├── models.py      # Step 1: SQLAlchemy 2.0 ORM model with organization_id FK
-├── schemas.py     # Step 2: Pydantic V2 schemas (CreateInput, UpdateInput, Response, ListResponse)
-├── repository.py  # Step 3: Data access layer (AsyncSession SQL queries with pagination)
-├── service.py     # Step 4: Business logic, permission checks, NotFoundError
-└── router.py      # Step 5: FastAPI router with PaginationParams & response builder
+├── schemas.py     # Step 3: Pydantic V2 schemas (CreateInput, UpdateInput, Response, ListResponse)
+├── repository.py  # Step 4: Data access layer (AsyncSession SQL queries with pagination)
+├── service.py     # Step 5: Business logic, permission checks, NotFoundError
+└── router.py      # Step 6: FastAPI router with PaginationParams & response builder
 ```
-- **Step 6**: Register router in `apps/api/main.py` (`app.include_router(...)`).
-- **Step 7**: Register model in `apps/api/migrations/env.py` and run Alembic migration.
+- **Step 1**: Implement database model in `models.py` with indexed `organization_id` foreign key.
+- **Step 2**: Register model in `apps/api/migrations/env.py` and run Alembic database migration.
+- **Step 3**: Define Pydantic V2 validation schemas in `schemas.py`.
+- **Step 4**: Implement data repository queries in `repository.py`.
+- **Step 5**: Implement business logic & permission checks in `service.py`.
+- **Step 6**: Create FastAPI router in `router.py` with `PaginationParams`.
+- **Step 7**: Register router in `apps/api/main.py` (`app.include_router(...)`).
 - **Step 8**: Synchronize TypeScript types via `pnpm typegen`.
+- **Step 9**: **Mandatory Integration & E2E Testing**:
+  - Add backend integration tests under `tests/integration/test_<module_name>_integration.py` covering CRUD operations, tenant boundary isolation (Org 1 vs Org 2), and RBAC permissions.
+  - Add Playwright E2E browser tests under `apps/web/e2e/<feature_name>.spec.ts` using `setupAuthenticatedUser` helper to verify full-stack UI -> API -> DB execution.
 
 ---
 
@@ -117,7 +125,7 @@ The application includes a state-of-the-art AI Agent builder and execution runti
 ## 💻 6. Type Safety, Verification & Code Quality
 
 - **Shared Types**: After modifying FastAPI Pydantic schemas, ALWAYS run `pnpm typegen` from workspace root to synchronize TypeScript interfaces in `packages/shared-types`.
-- **Verification Directives**: ALWAYS run `pnpm typecheck` across all workspace projects (`apps/web`, `apps/mobile`, `packages/shared-types`) and run pytest unit tests (`.venv/bin/python -m pytest tests/unit/`) to verify **0 build, type, or test errors** before declaring completion.
+- **Verification Directives**: ALWAYS run `pnpm typecheck` across all workspace projects (`apps/web`, `apps/mobile`, `packages/shared-types`), run unit tests (`.venv/bin/python -m pytest tests/unit/`), and run integration tests (`.venv/bin/python -m pytest tests/integration/`) to verify **0 build, type, or test errors** before declaring completion.
 
 ---
 
@@ -142,6 +150,9 @@ The application includes a state-of-the-art AI Agent builder and execution runti
 | **Sync Shared Types** | `pnpm typegen` |
 | **TypeScript Typecheck** | `pnpm typecheck` |
 | **Run Pytest Unit Tests** | `.venv/bin/python -m pytest tests/unit/` |
+| **Run Integration Tests** | `.venv/bin/python -m pytest tests/integration/` |
+| **Run Playwright E2E Tests** | `pnpm test:e2e` |
+| **Run All Test Suites** | `pnpm test:all` |
 | **Production Web Build** | `pnpm build:web` |
 | **Backend Configuration** | `apps/api/config.py` |
 | **Developer Guide** | [docs/developer_guide.md](file:///Users/sami/Desktop/Skeleton/docs/developer_guide.md) |

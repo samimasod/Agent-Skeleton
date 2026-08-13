@@ -72,6 +72,7 @@ class OrganizationRepository:
                 if value is not None:
                     setattr(org, key, value)
             await self.session.flush()
+            await self.session.refresh(org)
         return org
     
     async def delete(self, org_id: int) -> bool:

@@ -163,7 +163,7 @@ async def update_agent(
     check_permission(role, Permission.PROJECT_UPDATE)
 
     updated = await repos["agent"].update_agent(agent_id, data)
-    return AgentResponse.model_validate(updated)
+    return updated
 
 
 @router.delete("/{agent_id}", status_code=status.HTTP_204_NO_CONTENT)

@@ -106,7 +106,7 @@ async def update_project(
     check_permission(role, Permission.PROJECT_UPDATE)
     
     updated_project = await project_service.update_project(project_id, data)
-    return ProjectResponse.model_validate(updated_project)
+    return updated_project
 
 
 @router.delete("/{project_id}", status_code=status.HTTP_204_NO_CONTENT)

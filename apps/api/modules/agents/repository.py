@@ -198,6 +198,7 @@ class AgentRepository:
             agent.tools = list(tools_result.scalars().all())
 
         await self.session.flush()
+        await self.session.refresh(agent)
         return agent
 
     async def delete_agent(self, agent_id: int) -> bool:

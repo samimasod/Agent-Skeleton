@@ -6,7 +6,7 @@ This guide describes how to extend the Multi-Tenant Application Skeleton by addi
 
 ## 1. Creating a New Backend CRUD Module
 
-Adding a new domain module (e.g., "Products", "Orders", or "Customers") follows a strict 8-step architecture to maintain multi-tenant isolation, automated type-safety, and database migration integrity.
+Adding a new domain module (e.g., "Products", "Orders", or "Customers") follows a strict 9-step architecture to maintain multi-tenant isolation, automated type-safety, database migration integrity, and 100% test coverage.
 
 ### Directory Structure Convention
 Create a new directory under `apps/api/modules/<module_name>`:
@@ -257,13 +257,90 @@ Our application emphasizes **exceptional visual quality**, **dynamic state manag
 
 ---
 
-## 4. Summary Quick Reference
+## 4. Testing Strategy: Integration & Playwright E2E Framework
+
+Our testing framework guarantees that any new module or feature is verified across unit, integration, and full-stack browser levels.
+
+### A. Backend Integration Testing (`tests/integration/`)
+Integration tests hit real FastAPI endpoints using an async HTTP client (`httpx.AsyncClient`) connected to an isolated async SQLite test database (`DATABASE_ENV=test`).
+
+1. **Creating an Integration Test**:
+   Create a new file `tests/integration/test_<module_name>_integration.py`:
+   ```python
+   import pytest
+   from httpx import AsyncClient
+
+   pytestmark = pytest.mark.asyncio
+
+   async def test_create_product_integration(async_client: AsyncClient, seed_data: dict):
+       headers = {"Authorization": "Bearer test-owner-token"}
+       payload = {
+           "organization_id": seed_data["org1_id"],
+           "title": "Enterprise Plan",
+           "price": 299.99,
+       }
+
+       response = await async_client.post("/api/products", json=payload, headers=headers)
+       assert response.status_code == 201
+       data = response.json()
+       assert data["title"] == "Enterprise Plan"
+
+   async def test_product_tenant_isolation(async_client: AsyncClient, seed_data: dict):
+       # Verify Org 1 user cannot access Org 2 products (403 Forbidden)
+       headers_org1 = {"Authorization": "Bearer test-owner-token"}
+       response = await async_client.get(f"/api/products?organization_id={seed_data['org2_id']}", headers=headers_org1)
+       assert response.status_code == 403
+   ```
+2. **Pre-configured Test Users**:
+   - `test-owner-token` -> Role.OWNER in Org 1
+   - `test-admin-token` -> Role.ADMIN in Org 1
+   - `test-member-token` -> Role.MEMBER in Org 1
+   - `test-viewer-token` -> Role.VIEWER in Org 1
+   - `test-org2-owner-token` -> Role.OWNER in Org 2
+
+### B. Playwright E2E Browser Testing (`apps/web/e2e/`)
+Playwright tests operate standard browser instances to verify end-to-end user journeys (React UI -> FastAPI REST/WS -> Database).
+
+1. **Creating a Playwright E2E Test**:
+   Create a new file `apps/web/e2e/<feature_name>.spec.ts`:
+   ```typescript
+   import { test, expect } from "@playwright/test";
+   import { setupAuthenticatedUser } from "./helpers/auth";
+
+   test.describe("Products Feature E2E", () => {
+     test.beforeEach(async ({ page }) => {
+       await setupAuthenticatedUser(page, { role: "owner" });
+       await page.goto("/dashboard/products");
+     });
+
+     test("creates a new product via UI and verifies table update", async ({ page }) => {
+       await page.click("button:has-text('Create Product')");
+       await page.fill("input[name='title']", "Enterprise Plan");
+       await page.fill("input[name='price']", "299.99");
+       await page.click("button[type='submit']");
+
+       // Verifies reactive UI update powered by TanStack Query + FastAPI + Database
+       await expect(page.locator("table")).toContainText("Enterprise Plan");
+     });
+   });
+   ```
+2. **Running Playwright Tests**:
+   - Headless execution: `pnpm test:e2e`
+   - Playwright Interactive UI mode: `npx playwright test --ui`
+
+---
+
+## 5. Summary Quick Reference
 
 | Action | Command / Helper |
 | :--- | :--- |
+| **Run Unit Tests** | `.venv/bin/python -m pytest tests/unit/` |
+| **Run Integration Tests** | `.venv/bin/python -m pytest tests/integration/` |
+| **Run Playwright E2E Tests** | `pnpm test:e2e` |
+| **Run All Tests** | `pnpm test:all` |
 | **Backend Pagination** | `PaginationParams = Depends()`, `build_paginated_response(total, params)` |
 | **Web Pagination** | `usePagination({ initialPageSize: 10 })` (`@/hooks/use-pagination`) |
 | **Mobile Pagination** | `usePaginatedList<T>(fetcher, pageSize)` (`@/hooks/use-paginated-list`) |
-| **Generate Types** | `pnpm typegen` |
-| **Typecheck All Workspace** | `pnpm typecheck` |
+| **Generate Shared Types** | `pnpm typegen` |
+| **TypeScript Typecheck** | `pnpm typecheck` |
 | **Alembic Migration** | `.venv/bin/python -m alembic -c apps/api/migrations/alembic.ini revision --autogenerate -m "<msg>"` |

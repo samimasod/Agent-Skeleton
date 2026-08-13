@@ -26,6 +26,8 @@ jobs:
           uv pip install --system pytest pytest-asyncio pytest-cov
       - name: Run backend unit tests
         run: python -m pytest tests/unit
+      - name: Run backend integration tests
+        run: python -m pytest tests/integration
 
   frontend-build:
     runs-on: ubuntu-latest

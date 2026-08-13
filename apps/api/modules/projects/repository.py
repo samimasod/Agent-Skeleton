@@ -62,6 +62,7 @@ class ProjectRepository:
                 if value is not None:
                     setattr(project, key, value)
             await self.session.flush()
+            await self.session.refresh(project)
         return project
     
     async def delete(self, project_id: int) -> bool:

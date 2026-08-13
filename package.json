@@ -23,8 +23,11 @@
     "lint": "pnpm -r run lint",
     "test": ".venv/bin/python -m pytest tests/unit/",
     "test:api": ".venv/bin/python -m pytest tests/unit/",
+    "test:integration": ".venv/bin/python -m pytest tests/integration/",
+    "test:e2e": "pnpm --filter @skeleton/web test:e2e",
+    "test:all": "pnpm test:api && pnpm test:integration",
     "check:commit": "pnpm typegen && pnpm typecheck && pnpm --filter @skeleton/web lint",
-    "check:push": "pnpm check:commit && pnpm build && pnpm test:api",
+    "check:push": "pnpm check:commit && pnpm build && pnpm test:all",
     "hooks:install": "git config core.hooksPath .husky",
     "clean": "pnpm -r run clean"
   },

@@ -121,7 +121,7 @@ async def update_organization(
     check_permission(role, Permission.ORG_UPDATE)
     
     org = await service.update_organization(org_id, data)
-    return OrganizationResponse.model_validate(org)
+    return org
 
 
 @router.delete("/{org_id}", status_code=status.HTTP_204_NO_CONTENT)

@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     environment: str = Field(default="local", alias="DATABASE_ENV")
     debug: bool = Field(default=True, alias="API_DEBUG")
     sql_echo: bool = Field(default=False, alias="SQL_ECHO")
+    jwt_secret: str = Field(default="skeleton_local_jwt_secret_key_2026", alias="JWT_SECRET")
 
     api_host: str = Field(default="0.0.0.0", alias="API_HOST")
     api_port: int = Field(default=8000, alias="API_PORT")
